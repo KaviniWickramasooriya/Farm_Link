@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { BsCircle } from 'react-icons/bs';
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import GlobalStyles from '../../GlobalStyles';
 
 const AddBidding = () => {
     const [data, setData] = useState([]);
@@ -32,7 +33,7 @@ const AddBidding = () => {
   
     return (
       <div style={{ color: 'black' }}>
-  
+            <GlobalStyles/>
           
         <h1 style={{ textAlign: 'center' }}>Bidding List</h1>
   
