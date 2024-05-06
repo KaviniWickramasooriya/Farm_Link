@@ -41,6 +41,8 @@ import BiddingList from "./pages/bidding/BiddingList/BiddingList";
 import BiddingDetails from "./pages/bidding/BiddingDetails/BiddingDetails";
 import AddBidding from "./pages/bidding/AddBidding";
 import BiddingForm from "./pages/bidding/BiddingForm";
+import ViewBiddings from "./components/Admin/AdminNavCom/ViewBiddings";
+
 
 axios.defaults.withCredentials = true;
 let user;
@@ -71,6 +73,9 @@ function App() {
             {user && user.role === "admin" && (
               <Route path="/*" element={<AdminMain />} />
             )}
+            {/* {user && user.role === "admin" && (
+              <Route path="viewBiddings" element={<ViewBiddings />} />
+            )} */}
             {user && user.role === "buyer" && (
               <Route
                 path="/**"
@@ -115,6 +120,7 @@ function App() {
                   </Sidebar>
                 }
               />
+              
             {user && user.role === "delivery" && (
               <Route path="/*" element={<DeliveryMain />} />
             )}
