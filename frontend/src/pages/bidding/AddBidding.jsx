@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { AiTwotoneDelete } from 'react-icons/ai';
-import { MdEditSquare } from 'react-icons/md';
+import { MdEdit } from 'react-icons/md';
 import Button from 'react-bootstrap/Button';
 import { BsCircle } from 'react-icons/bs';
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { Link } from 'react-router-dom';
+//import toast from 'react-hot-toast';
 import GlobalStyles from '../../GlobalStyles';
+
 
 const AddBidding = () => {
     const [data, setData] = useState([]);
@@ -27,9 +29,26 @@ const AddBidding = () => {
       };
       fetchData();
     }, []);
-     // Empty dependency array means this effect runs once after initial render
   
     console.log('Data state:', data); // Log the state of data for debugging
+  
+    const handleDelete = async (id) => {
+      try {
+          const response = await fetch(`http://localhost:5000/api/buyer/delete/${id}`, {
+              method: 'DELETE'
+          });
+          if (!response.ok) {
+              throw new Error('Failed to delete bidding item');
+          }
+          // Handle UI update after successful deletion
+      } catch (error) {
+          console.error('Error deleting bidding item:', error);
+      }
+  };
+
+  const handleEdit = async (id) => {
+      
+  };
   
     return (
       <div style={{ color: 'black' }}>
@@ -72,14 +91,16 @@ const AddBidding = () => {
                     <td>{bidding.title}</td>
                     <td>{bidding.startingPrice}</td>
                     <td>
-                      <Button className="m-1 px-3" variant="danger" size="sm">
+                      <Button className="m-1 px-3" variant="danger" size="sm" onClick={() => handleDelete(bidding._id)}>
                         <AiTwotoneDelete className="mb-1 mx-1" />
                         <span>Delete</span>
                       </Button>
-                      <Button className="m-1 px-3" variant="info" size="sm">
-                        <MdEditSquare className="mb-1 mx-1" />
-                        <span>Edit</span>
-                      </Button>
+                      <Link to={`/edit/${bidding._id}`}>
+                        <Button className="m-1 px-3" variant="info" size="sm">
+                            <MdEdit className="mb-1 mx-1" />
+                            <span>Edit</span>
+                        </Button>
+                      </Link>
                     </td>
                   </tr>
                 ))
@@ -95,4 +116,4 @@ const AddBidding = () => {
     );
 }
 
-export default AddBidding
+export default AddBidding;

@@ -31,6 +31,15 @@ const getBiddingsByUser = async (userId) => {
     return await BuyerReq.find({ user: userId });      
 };
 
+// Delete post by ID
+const deletePost = async (postId) => {
+    return await Post.findByIdAndDelete(postId);
+};
+
+// Update post by ID
+const updatePost = async (postId, newData) => {
+    return await Post.findByIdAndUpdate(postId, newData, { new: true });
+};
 
 
 module.exports = {
@@ -38,5 +47,7 @@ module.exports = {
     addPost,
     getPostDetailsById,
     getBiddingsByCategory,
-    getBiddingsByUser
+    getBiddingsByUser,
+    deletePost,
+    updatePost
 };

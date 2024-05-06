@@ -4,7 +4,9 @@ import "react-quill/dist/quill.snow.css";
 import Card from "../../components/card/Card";
 import axios from "axios";
 import GlobalStyles from '../../GlobalStyles';
+import toast from 'react-hot-toast';
 import "./BiddingForm.scss";
+
 
 const BiddingForm = () => {
   const [description, setDescription] = useState("");
@@ -55,8 +57,7 @@ const BiddingForm = () => {
       });
   
       console.log(res.data); // Assuming the backend returns the saved bidding data
-      // Optionally, show a success message or redirect the user
-  
+      toast.success('Bidding added successfully!');
       // Clear form fields after successful submission
       setDescription("");
       setLocation("");

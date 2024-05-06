@@ -2,7 +2,6 @@ const asyncHandler = require("express-async-handler");
 const { fileSizeFormatter } = require("../Utills/fileupload");
 const buyerReqService = require("../Services/BuyerReqService");
 const cloudinary = require("cloudinary").v2;
-
 const demo = "65f7f55b48d15913a43fedda"
 
 //get All Data
@@ -103,14 +102,33 @@ const getBiddingsById = asyncHandler(async (req, res) => {
     
 });
 
+// Delete post by ID
+const deletePost = asyncHandler(async (req, res) => {
+    const postId = req.params.id;
+    const deletedPost = await buyerReqService.deletePost(postId);
+    if (!deletedPost) {
+        return res.status(404).json({ message: "Post not found" });
+    }
+    res.status(200).json({ message: "Post deleted successfully" });
+});
 
+// Update post by ID
+const updatePost = asyncHandler(async (req, res) => {
+    const postId = req.params.id;
+    const { description, location, category, title, startingPrice } = req.body;
+    const updatedPost = await buyerReqService.updatePost(postId, { description, location, category, title, startingPrice });
+    if (!updatedPost) {
+        return res.status(404).json({ message: "Post not found" });
+    }
+    res.status(200).json({ message: "Post updated successfully", post: updatedPost });
+});
 
-module.exports = {
+module.exports  = {
     getAllPosts,
     addPost,
     getPostDetails,
     getBiddingDetailsByCategory,
-    getBiddingsById
-  
-    // deletePost
+    getBiddingsById,
+    deletePost,
+    updatePost
 };
