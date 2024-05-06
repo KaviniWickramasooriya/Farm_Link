@@ -3,8 +3,8 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { BsCircle } from 'react-icons/bs';
 import { IoMdAddCircleOutline } from "react-icons/io";
-import GlobalStyles from '../../../GlobalStyles';
-import AdminSideBar from "../AdminCom/AdminSideBar"
+
+
 
 
 const ViewBiddings = () => {
@@ -32,10 +32,11 @@ const ViewBiddings = () => {
   
     return (
 
-        <div className="p-5 " style={{display:'flex'}}>
+        <div className="p-5 ">
+            
             
         <div style={{ color: 'black' }}>
-            <GlobalStyles/>
+            
     
           
         <h1 style={{ textAlign: 'center' }}>Bidding List</h1>
