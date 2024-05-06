@@ -39,7 +39,8 @@ import OfferManagement from "./components/offer/Offers";
 import OfferPreview from "./components/offer/OfferPreview";
 import BiddingList from "./pages/bidding/BiddingList/BiddingList";
 import BiddingDetails from "./pages/bidding/BiddingDetails/BiddingDetails";
-
+import AddBidding from "./pages/bidding/AddBidding";
+import BiddingForm from "./pages/bidding/BiddingForm";
 
 axios.defaults.withCredentials = true;
 let user;
@@ -91,7 +92,29 @@ function App() {
                   </Sidebar>
                 }
               />
+              
             )}
+
+              <Route
+                path="/addBidding"
+                element={
+                  <Sidebar>
+                    <Layout>
+                      <AddBidding />
+                    </Layout>
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/biddingForm"
+                element={
+                  <Sidebar>
+                    <Layout>
+                      <BiddingForm />
+                    </Layout>
+                  </Sidebar>
+                }
+              />
             {user && user.role === "delivery" && (
               <Route path="/*" element={<DeliveryMain />} />
             )}

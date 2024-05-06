@@ -42,7 +42,7 @@ const menu = [
   {
     title: "Create A Bidding Post",
     icon: <MdCreate />,
-    path: "/market",
+    path: "/addBidding",
   },
   {
     title: "Report Bug",
