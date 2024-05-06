@@ -3,12 +3,14 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { BsCircle } from 'react-icons/bs';
 import { IoMdAddCircleOutline } from "react-icons/io";
-
+import { generatePDF } from './GeneratePDF';
 
 
 
 const ViewBiddings = () => {
     const [data, setData] = useState([]);
+
+    
 
     useEffect(() => {
       const fetchData = async () => {
@@ -29,6 +31,16 @@ const ViewBiddings = () => {
      // Empty dependency array means this effect runs once after initial render
   
     console.log('Data state:', data); // Log the state of data for debugging
+
+    const handleDownloadReport = () => {
+        // Define columns for the PDF table
+        const columns = ['description', 'category', 'location', 'title', 'startingPrice'];
+        // Define title and fileName for the PDF
+        const title = 'Bidding Report';
+        const fileName = 'bidding_report';
+        // Generate PDF with the data
+        generatePDF(title, columns, data, fileName);
+      };
   
     return (
 
@@ -43,9 +55,13 @@ const ViewBiddings = () => {
   
         <div className="btnn" style={{marginLeft:'200px'}}>
         
-        <Button variant="primary" className="m-1" style={{display:'flex', gap:'20px'}}>
+        {/* <Button variant="primary" className="m-1" style={{display:'flex', gap:'20px'}}>
               <IoMdAddCircleOutline className="mb-1" style={{}}/> <span>Download Report</span>
-          </Button>
+          </Button> */}
+          <Button variant="primary" className="m-1" style={{ display: 'flex', gap: '20px' }} onClick={handleDownloadReport}>
+          <IoMdAddCircleOutline className="mb-1" /> <span>Download Report</span>
+          
+        </Button>
           
         </div>
         <div className="mt-5" style={{ zIndex: '5', width: '80%', marginTop: '100px', marginLeft: '150px' }}>
