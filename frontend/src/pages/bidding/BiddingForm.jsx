@@ -41,7 +41,7 @@ const BiddingForm = () => {
   
     try {
       const formData = new FormData();
-      formData.append("description", description);
+      formData.append("description", description.replace(/<p>/g, '').replace(/<\/p>/g, ''));
       formData.append("location", location);
       formData.append("category", category);
       formData.append("title", title);
