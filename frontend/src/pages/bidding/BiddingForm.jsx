@@ -48,19 +48,22 @@ const BiddingForm = () => {
       formData.append("startingPrice", startingPrice);
       formData.append("image", image);
 
-      const res = await axios.post("/api/buyer/createPost", formData, {
+      const res = await axios.post("http://localhost:5000/api/buyer/createPost", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
       console.log(res.data); // Assuming the backend returns the saved bidding data
-      // Optionally, you can redirect the user to another page or display a success message
+
+      // Redirect to /addBidding after successful submission
+      //history.push('/addBidding');
     } catch (error) {
       console.error("Error saving bidding:", error);
       // Optionally, you can display an error message to the user
     }
   };
+
 
   return (
     <div className="add-bidding">
