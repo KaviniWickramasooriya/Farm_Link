@@ -1,353 +1,120 @@
-// import React, { useState } from "react";
-// import ReactQuill from "react-quill";
-// import "react-quill/dist/quill.snow.css";
-// import Card from "../../components/card/Card";
-// import axios from "axios";
-// import GlobalStyles from '../../GlobalStyles';
-// import toast from 'react-hot-toast';
-// import "./BiddingForm.scss";
-
-
-// const UpdateBiddingForm = () => {
-//   const [description, setDescription] = useState("");
-//   const [location, setLocation] = useState("");
-//   const [category, setCategory] = useState("");
-//   const [title, setTitle] = useState("");
-//   const [startingPrice, setStartingPrice] = useState("");
-//   const [image, setImage] = useState(null);
-//   const [imagePreview, setImagePreview] = useState(null);
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     if (name === "description") setDescription(value);
-//     if (name === "location") setLocation(value);
-//     if (name === "category") setCategory(value);
-//     if (name === "title") setTitle(value);
-//     if (name === "startingPrice") setStartingPrice(value);
-//   };
-
-//   const handleImageChange = (e) => {
-//     const file = e.target.files[0];
-//     if (file) {
-//       setImage(file);
-//       const reader = new FileReader();
-//       reader.onloadend = () => {
-//         setImagePreview(reader.result);
-//       };
-//       reader.readAsDataURL(file);
-//     }
-//   };
-
-//   const saveBidding = async (e) => {
-//     e.preventDefault();
-  
-//     try {
-//       const formData = new FormData();
-//       formData.append("description", description.replace(/<p>/g, '').replace(/<\/p>/g, ''));
-//       formData.append("location", location);
-//       formData.append("category", category);
-//       formData.append("title", title);
-//       formData.append("startingPrice", startingPrice);
-//       formData.append("image", image);
-  
-//       const res = await axios.post("http://localhost:5000/api/buyer/createPost", formData, {
-//         headers: {
-//           "Content-Type": "multipart/form-data",
-//         },
-//       });
-  
-//       console.log(res.data); // Assuming the backend returns the saved bidding data
-//       toast.success('Bidding added successfully!');
-//       // Clear form fields after successful submission
-//       setDescription("");
-//       setLocation("");
-//       setCategory("");
-//       setTitle("");
-//       setStartingPrice("");
-//       setImage(null);
-//       setImagePreview(null);
-//     } catch (error) {
-//       console.error("Error saving bidding:", error);
-//       // Optionally, display an error message to the user
-//     }
-//   };
-  
-
-
-//   return (
-//     <div className="add-bidding">
-//         <GlobalStyles/>      
-//       <Card cardClass={"card"}>
-//       <h3 style={{alignSelf:'center'}}>Add A Bidding</h3>
-//         <form onSubmit={saveBidding}>
-//           <label>Title:</label>
-//           <input
-//             type="text"
-//             placeholder="Title"
-//             name="title"
-//             value={title}
-//             onChange={handleInputChange}
-//           />
-
-//           <label>Description:</label>
-//           <ReactQuill
-//             theme="snow"
-//             value={description}
-//             onChange={setDescription}
-//             modules={UpdateBiddingForm.modules}
-//             formats={UpdateBiddingForm.formats}
-//           />
-
-//           <label>Location:</label>
-//           <input
-//             type="text"
-//             placeholder="Location"
-//             name="location"
-//             value={location}
-//             onChange={handleInputChange}
-//           />
-
-//           <label>Category:</label>
-//           <select
-//             name="category"
-//             value={category}
-//             onChange={handleInputChange}
-//           >
-//             <option value="">Select Category</option>
-//             <option value="Vegetable">Vegetable</option>
-//             <option value="Fruit">Fruit</option>
-//             <option value="Grain">Grain</option>
-//           </select>
-
-//           <Card cardClass={"group"}>
-//             <label>Image:</label>
-//             <input
-//               type="file"
-//               name="image"
-//               onChange={(e) => handleImageChange(e)}
-//             />
-//             {imagePreview && (
-//               <div className="image-preview">
-//                 <img src={imagePreview} alt="bidding" />
-//               </div>
-//             )}
-//           </Card>
-
-//           <label>Starting Price:</label>
-//           <input
-//             type="number"
-//             placeholder="Starting Price"
-//             name="startingPrice"
-//             value={startingPrice}
-//             onChange={handleInputChange}
-//           />
-
-//           <div className="--my">
-//             <button type="submit" className="--btn --btn-primary">
-//               Save
-//             </button>
-//           </div>
-//         </form>
-//       </Card>
-//     </div>  
-//   );
-// };
-
-// UpdateBiddingForm.modules = {
-//   toolbar: [
-//     [{ header: "1" }, { header: "2" }, { font: [] }],
-//     [{ size: [] }],
-//     ["bold", "italic", "underline", "strike", "blockquote"],
-//     [{ align: [] }],
-//     [{ color: [] }, { background: [] }],
-//     [
-//       { list: "ordered" },
-//       { list: "bullet" },
-//       { indent: "-1" },
-//       { indent: "+1" },
-//     ],
-//     ["clean"],
-//   ],
-// };
-// UpdateBiddingForm.formats = [
-//   "header",
-//   "font",
-//   "size",
-//   "bold",
-//   "italic",
-//   "underline",
-//   "strike",
-//   "blockquote",
-//   "color",
-//   "background",
-//   "list",
-//   "bullet",
-//   "indent",
-//   "link",
-//   "video",
-//   "image",
-//   "code-block",
-//   "align",
-// ];
-
-// export default UpdateBiddingForm;
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Card from "../../components/card/Card";
-import axios from "axios";
-import GlobalStyles from "../../GlobalStyles";
-import toast from "react-hot-toast";
+import axios from 'axios';
+import GlobalStyles from '../../GlobalStyles';
+import toast from 'react-hot-toast';
 import "./BiddingForm.scss";
 
-const UpdateBiddingForm = () => {
-  const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
-  const [category, setCategory] = useState("");
-  const [title, setTitle] = useState("");
-  const [startingPrice, setStartingPrice] = useState("");
-  const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+
+function UpdateBiddingForm({ biddingId }) {
+  const [bidding, setBidding] = useState({
+    title: "",
+    location: "",
+    category: "",
+    image: "",
+    startingPrice: "",
+    description: "",
+  });
 
   useEffect(() => {
-    // Fetch bidding data when component mounts
-    fetchBiddingData();
-  }, []);
+    if (biddingId) {
+      fetchBidding(biddingId);
+    }
+  }, [biddingId]);
 
-  const fetchBiddingData = async () => {
+  const fetchBidding = async (id) => {
     try {
-      // Fetch bidding data from your backend API
-      const response = await axios.get("http://localhost:5000/api/buyer/getPost/");
-      const biddingData = response.data; // Assuming your API returns the bidding data
-
-      // Populate form fields with fetched data
-      setDescription(biddingData.description);
-      setLocation(biddingData.location);
-      setCategory(biddingData.category);
-      setTitle(biddingData.title);
-      setStartingPrice(biddingData.startingPrice);
-
-      // Set image preview if an image URL is provided in the bidding data
-      if (biddingData.imageUrl) {
-        setImagePreview(biddingData.imageUrl);
-      }
+      const response = await axios.get(`http://localhost:5000/api/buyer/getPost/${bidding._id}`);
+      setBidding(response.data); // Update the bidding state with fetched data
     } catch (error) {
-      console.error("Error fetching bidding data:", error);
-      // Optionally, display an error message to the user
+      console.error('Error fetching bidding:', error);
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === "description") setDescription(value);
-    if (name === "location") setLocation(value);
-    if (name === "category") setCategory(value);
-    if (name === "title") setTitle(value);
-    if (name === "startingPrice") setStartingPrice(value);
+    setBidding(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const saveBidding = async (e) => {
+  const handleUpdateSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      const formData = new FormData();
-      formData.append("description", description.replace(/<p>/g, "").replace(/<\/p>/g, ""));
-      formData.append("location", location);
-      formData.append("category", category);
-      formData.append("title", title);
-      formData.append("startingPrice", startingPrice);
-      formData.append("image", image);
-
-      const res = await axios.post("http://localhost:5000/api/buyer/createPost", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    axios.put(`http://localhost:5000/api/buyer/update/${bidding._id}`, bidding)
+      .then((res) => {
+        toast.success("Bidding updated successfully");
+      })
+      .catch((err) => {
+        console.error("Error updating Bidding:", err);
+        toast.error("Error occurred while updating Bidding. Please try again later.");
       });
-
-      console.log(res.data); // Assuming the backend returns the saved bidding data
-      toast.success("Bidding added successfully!");
-      // Clear form fields after successful submission
-      setDescription("");
-      setLocation("");
-      setCategory("");
-      setTitle("");
-      setStartingPrice("");
-      setImage(null);
-      setImagePreview(null);
-    } catch (error) {
-      console.error("Error saving bidding:", error);
-      // Optionally, display an error message to the user
-    }
   };
 
   return (
     <div className="add-bidding">
-      <GlobalStyles />
+      <GlobalStyles/>      
       <Card cardClass={"card"}>
-        <h3 style={{ alignSelf: "center" }}>Add A Bidding</h3>
-        <form onSubmit={saveBidding}>
+        <h2 style={{alignSelf:'center'}}>Edit Bidding</h2>
+        <form onSubmit={handleUpdateSubmit}>
           <label>Title:</label>
-          <input type="text" placeholder="Title" name="title" value={title} onChange={handleInputChange} />
+          <input
+            type="text"
+            placeholder="Title"
+            name="title"
+            value={bidding.title}
+            onChange={handleInputChange}
+          />
 
           <label>Description:</label>
           <ReactQuill
             theme="snow"
-            value={description}
-            onChange={setDescription}
+            value={bidding.description}
+            onChange={(value) => setBidding(prevState => ({ ...prevState, description: value }))}
             modules={UpdateBiddingForm.modules}
             formats={UpdateBiddingForm.formats}
           />
 
           <label>Location:</label>
-          <input type="text" placeholder="Location" name="location" value={location} onChange={handleInputChange} />
+          <input
+            type="text"
+            placeholder="Location"
+            name="location"
+            value={bidding.location}
+            onChange={handleInputChange}
+          />
 
           <label>Category:</label>
-          <select name="category" value={category} onChange={handleInputChange}>
+          <select
+            name="category"
+            value={bidding.category}
+            onChange={handleInputChange}
+          >
             <option value="">Select Category</option>
             <option value="Vegetable">Vegetable</option>
             <option value="Fruit">Fruit</option>
             <option value="Grain">Grain</option>
           </select>
 
-          <Card cardClass={"group"}>
-            <label>Image:</label>
-            <input type="file" name="image" onChange={(e) => handleImageChange(e)} />
-            {imagePreview && (
-              <div className="image-preview">
-                <img src={imagePreview} alt="bidding" />
-              </div>
-            )}
-          </Card>
-
           <label>Starting Price:</label>
           <input
             type="number"
             placeholder="Starting Price"
             name="startingPrice"
-            value={startingPrice}
+            value={bidding.startingPrice}
             onChange={handleInputChange}
           />
 
           <div className="--my">
             <button type="submit" className="--btn --btn-primary">
-              Save
+              Submit Bidding
             </button>
           </div>
         </form>
       </Card>
-    </div>
+    </div>  
   );
 };
 
@@ -358,7 +125,12 @@ UpdateBiddingForm.modules = {
     ["bold", "italic", "underline", "strike", "blockquote"],
     [{ align: [] }],
     [{ color: [] }, { background: [] }],
-    [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" },
+    ],
     ["clean"],
   ],
 };

@@ -78,7 +78,7 @@ const BiddingForm = () => {
     <div className="add-bidding">
         <GlobalStyles/>      
       <Card cardClass={"card"}>
-      <h3 style={{alignSelf:'center'}}>Add A Bidding</h3>
+      <h2 style={{alignSelf:'center'}}>Add A Bidding</h2>
         <form onSubmit={saveBidding}>
           <label>Title:</label>
           <input

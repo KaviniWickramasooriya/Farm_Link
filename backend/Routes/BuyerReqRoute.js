@@ -20,6 +20,12 @@ router.get('/user-biddings/:id', getBiddingsById);
 router.put("/update/:id", updatePost);
 
 
+// Get a specific bidding
+router.get('/getPost/:_id', getBidding, (req, res) => {
+    res.json(res.bidding);
+});
+
+
 // DELETE delete bidding by ID
 router.delete("/delete/:_id", async (req, res) => {
     const _id = req.params._id;
@@ -32,6 +38,29 @@ router.delete("/delete/:_id", async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Error deleting bidding" });
+    }
+});
+
+// Update bidding by ID 
+router.put('/update/:_id', async (req, res) => {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ['title', 'location', 'category', 'image', 'startingPrice', 'description', 'workUpdate'];
+    const isValidOperation = updates.every(update => allowedUpdates.includes(update));
+  
+    if (!isValidOperation) {
+      return res.status(400).send({ error: 'Invalid updates!' });
+    }
+  
+    try {
+      const buyerReq = await BuyerReq.findByIdAndUpdate(req.params._id, req.body, { new: true, runValidators: true });
+  
+      if (!buyerReq) {
+        return res.status(404).send();
+      }
+  
+      res.send(buyerReq);
+    } catch (error) {
+      res.status(400).send(error);
     }
 });
 

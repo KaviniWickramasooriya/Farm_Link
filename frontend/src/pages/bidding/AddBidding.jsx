@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import GlobalStyles from '../../GlobalStyles';
 import axios from "axios";
+import './AddBidding.scss';
 
 
 const AddBidding = () => {
@@ -62,20 +63,20 @@ const AddBidding = () => {
     };
 
     return (
-        <div style={{ color: 'black' }}>
+        <div className="bidding-list" style={{ color: 'black' }}>
             <GlobalStyles />
 
-            <h1 style={{ textAlign: 'center' }}>Bidding List</h1>
+            <h2 style={{ textAlign: 'center' }}>Bidding List</h2>
 
-            <div className="btnn" style={{ marginLeft: '200px' }}>
+            <div className="btnn" style={{ marginLeft: '100px' }}>
                 <Link to="/biddingForm">
                     <Button variant="primary" className="m-1" style={{ display: 'flex', gap: '20px', width:'150px' }}>
                         <IoMdAddCircleOutline className="mb-1" style={{}} /> <span style={{fontSize:'15px'}}>Add a Bid</span>
                     </Button>
                 </Link>
             </div>
-            <div className="mt-5" style={{ zIndex: '5', width: '80%', marginTop: '100px', marginLeft: '150px' }}>
-                <Table striped bordered hover>
+            <div className="mt-5" style={{marginTop: '100px', marginLeft: '50px' }}>
+                    <table>
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -106,7 +107,7 @@ const AddBidding = () => {
                                             <AiTwotoneDelete className="mb-1 mx-1" />
                                             <span>Delete</span>
                                         </Button>
-                                        <Link to={`/edit/${bidding._id}`}>
+                                        <Link to='/updateBiddingForm'>
                                             <Button className="m-1 px-3" variant="info" size="sm">
                                                 <MdEdit className="mb-1 mx-1" />
                                                 <span>Edit</span>
@@ -121,7 +122,7 @@ const AddBidding = () => {
                             </tr>
                         )}
                     </tbody>
-                </Table>
+                    </table>
             </div>
             <Modal show={showConfirmationModal} onHide={handleCloseConfirmationModal}>
                 <Modal.Header closeButton>
