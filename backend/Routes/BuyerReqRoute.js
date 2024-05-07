@@ -9,7 +9,7 @@ const {
     getPostDetails,
     getBiddingDetailsByCategory,
     getBiddingsById,
-    updatePost
+    //updatePost
 } = require("../Controllers/BuyerReqController");
 
 router.get("/getAllPosts", getAllPosts);
@@ -17,13 +17,13 @@ router.post("/createPost", upload.single("image"), addPost);
 router.get("/getPost/:id", getPostDetails);
 router.get("/category/:category", getBiddingDetailsByCategory);
 router.get('/user-biddings/:id', getBiddingsById);
-router.put("/update/:id", updatePost);
+//router.put("/update/:id", updatePost);
 
 
-// Get a specific bidding
-router.get('/getPost/:_id', getBidding, (req, res) => {
-    res.json(res.bidding);
-});
+// // Get a specific bidding
+// router.get('/getPost/:_id', getBidding, (req, res) => {
+//     res.json(res.bidding);
+// });
 
 
 // DELETE delete bidding by ID
