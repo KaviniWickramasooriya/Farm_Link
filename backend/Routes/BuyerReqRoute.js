@@ -59,6 +59,7 @@ router.put('/update/:_id', async (req, res) => {
       }
   
       res.send(buyerReq);
+
     } catch (error) {
       res.status(400).send(error);
     }

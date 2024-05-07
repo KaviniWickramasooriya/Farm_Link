@@ -107,7 +107,7 @@ const AddBidding = () => {
                                             <AiTwotoneDelete className="mb-1 mx-1" />
                                             <span>Delete</span>
                                         </Button>
-                                        <Link to='/updateBiddingForm'>
+                                        <Link to={`/updateBiddingForm/${bidding._id}`}>
                                             <Button className="m-1 px-3" variant="info" size="sm">
                                                 <MdEdit className="mb-1 mx-1" />
                                                 <span>Edit</span>
