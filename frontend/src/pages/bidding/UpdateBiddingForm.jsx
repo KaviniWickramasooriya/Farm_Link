@@ -36,7 +36,7 @@ function UpdateBiddingForm() {
                 title,
                 location,
                 category,
-                image: image.filePath, // Assuming filePath is the URL of the image
+                //image: image.filePath, // Assuming filePath is the URL of the image
                 startingPrice,
                 description,
             });
