@@ -121,7 +121,7 @@ function App() {
                 }
               />
               <Route
-                path="/updateBiddingForm"
+                path="/updateBiddingForm/:id"
                 element={
                   <Sidebar>
                     <Layout>
