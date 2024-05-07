@@ -69,8 +69,8 @@ const AddBidding = () => {
 
             <div className="btnn" style={{ marginLeft: '200px' }}>
                 <Link to="/biddingForm">
-                    <Button variant="primary" className="m-1" style={{ display: 'flex', gap: '20px' }}>
-                        <IoMdAddCircleOutline className="mb-1" style={{}} /> <span>Add a Bid</span>
+                    <Button variant="primary" className="m-1" style={{ display: 'flex', gap: '20px', width:'150px' }}>
+                        <IoMdAddCircleOutline className="mb-1" style={{}} /> <span style={{fontSize:'15px'}}>Add a Bid</span>
                     </Button>
                 </Link>
             </div>
