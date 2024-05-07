@@ -324,7 +324,6 @@
 // export default UpdateBiddingForm;
 
 
-
 import React, { useState, useEffect } from 'react';
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -332,11 +331,12 @@ import Card from "../../components/card/Card";
 import axios from 'axios';
 import GlobalStyles from '../../GlobalStyles';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom'; // Import useParams hook
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import "./BiddingForm.scss";
 
 function UpdateBiddingForm() {
     const { id } = useParams(); // Access the bidding ID from URL parameter
+    const navigate = useNavigate(); // Get the navigate function
     const [bidding, setBidding] = useState({
         _id: "", // Add _id field to the initial state
         title: "",
@@ -371,32 +371,45 @@ function UpdateBiddingForm() {
         }
     };
 
-    const handleInputChange = (e) => {
+    /*const handleInputChange = (e) => {
         const { name, value } = e.target;
         setBidding(prevState => ({
             ...prevState,
             [name]: value
         }));
-    };
+    };*/
+    const handleInputChange = (e) => {
+      // Check if e exists and e.target is defined
+      if (e && e.target) {
+          const { name, value } = e.target;
+          setBidding(prevState => ({
+              ...prevState,
+              [name]: value
+          }));
+      }
+  };
+  
 
     const handleUpdateSubmit = (e) => {
-      e.preventDefault();
-      if (!bidding._id) {
-          console.error("Bidding ID is undefined.");
-          console.log(`Bidding id ${bidding._id}`)
-          return; // Skip the update if _id is undefined
-      }
-      console.log("Bidding data:", bidding); // Log the bidding object
-      axios.put(`http://localhost:5000/api/buyer/update/${bidding._id}`)
-          .then((res) => {
-              toast.success("Bidding updated successfully");
-              console.log("Updated")
-          })
-          .catch((err) => {
-              console.error("Error updating Bidding:", err);
-              toast.error("Error occurred while updating Bidding. Please try again later.");
-          });
-  };
+        e.preventDefault();
+        if (!bidding._id) {
+            console.error("Bidding ID is undefined.");
+            console.log(`Bidding id ${bidding._id}`)
+            return; // Skip the update if _id is undefined
+        }
+        console.log("Bidding data:", bidding); // Log the bidding object
+        axios.put(`http://localhost:5000/api/buyer/update/${bidding._id}`,bidding)
+            .then((res) => {
+                toast.success("Bidding updated successfully");
+                console.log("Updated");
+                // Navigate to addBidding page after successful update
+                navigate('/addBidding');
+            })
+            .catch((err) => {
+                console.error("Error updating Bidding:", err);
+                toast.error("Error occurred while updating Bidding. Please try again later.");
+            });
+    };
   
 
     return (
@@ -418,7 +431,8 @@ function UpdateBiddingForm() {
                     <ReactQuill
                         theme="snow"
                         value={bidding.description}
-                        onChange={(value) => setBidding(prevState => ({ ...prevState, description: value }))}
+                        //onChange={(value) => setBidding(prevState => ({ ...prevState, description: value }))}
+                        onChange={handleInputChange}
                         modules={UpdateBiddingForm.modules}
                         formats={UpdateBiddingForm.formats}
                     />
@@ -443,6 +457,8 @@ function UpdateBiddingForm() {
                         <option value="Fruit">Fruit</option>
                         <option value="Grain">Grain</option>
                     </select>
+
+                    
 
                     <label>Starting Price:</label>
                     <input
