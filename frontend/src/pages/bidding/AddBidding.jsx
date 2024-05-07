@@ -70,11 +70,12 @@ const AddBidding = () => {
 
             <div className="btnn" style={{ marginLeft: '100px' }}>
                 <Link to="/biddingForm">
-                    <Button variant="primary" className="m-1" style={{ display: 'flex', gap: '20px', width:'150px' }}>
-                        <IoMdAddCircleOutline className="mb-1" style={{}} /> <span style={{fontSize:'15px'}}>Add a Bid</span>
+                    <Button variant="primary" className="m-1" style={{ display: 'flex', gap: '20px', width:'170px' }}>
+                        <IoMdAddCircleOutline className="mb-1" style={{}} /> <span style={{fontSize:'18px'}}>Add a Bid</span>
                     </Button>
                 </Link>
             </div>
+
             <div className="mt-5" style={{marginTop: '100px', marginLeft: '50px' }}>
                     <table>
                     <thead>
@@ -102,7 +103,7 @@ const AddBidding = () => {
                                     <td>{bidding.category}</td>
                                     <td>{bidding.location}</td>                                  
                                     <td>{bidding.startingPrice}</td>
-                                    <td>
+                                    <td style={{display:'flex'}}>
                                         <Button className="m-1 px-3" variant="danger" size="sm" onClick={() => handleOpenConfirmationModal(bidding._id)}>
                                             <AiTwotoneDelete className="mb-1 mx-1" />
                                             <span>Delete</span>
