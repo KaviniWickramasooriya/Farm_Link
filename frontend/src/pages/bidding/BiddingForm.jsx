@@ -6,9 +6,11 @@ import axios from "axios";
 import GlobalStyles from '../../GlobalStyles';
 import toast from 'react-hot-toast';
 import "./BiddingForm.scss";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 
 
 const BiddingForm = () => {
+  const navigate = useNavigate(); // Get the navigate function
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("");
@@ -66,6 +68,7 @@ const BiddingForm = () => {
       setStartingPrice("");
       setImage(null);
       setImagePreview(null);
+      navigate('/addBidding');
     } catch (error) {
       console.error("Error saving bidding:", error);
       // Optionally, display an error message to the user
