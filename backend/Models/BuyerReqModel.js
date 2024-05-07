@@ -18,7 +18,7 @@ const BiddingPostSchema = new Schema({
     },
     image:{
         type : Object,
-        required : [true,"Please add an image"],
+        //required : [true,"Please add an image"],
     },
     user:{
         type:mongoose.Schema.Types.ObjectId,
