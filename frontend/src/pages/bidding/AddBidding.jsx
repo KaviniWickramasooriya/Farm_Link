@@ -104,16 +104,18 @@ const AddBidding = () => {
                                     <td>{bidding.location}</td>                                  
                                     <td>{bidding.startingPrice}</td>
                                     <td style={{display:'flex'}}>
-                                        <Button className="m-1 px-3" variant="danger" size="sm" onClick={() => handleOpenConfirmationModal(bidding._id)}>
-                                            <AiTwotoneDelete className="mb-1 mx-1" />
-                                            <span>Delete</span>
-                                        </Button>
+
                                         <Link to={`/updateBiddingForm/${bidding._id}`}>
                                             <Button className="m-1 px-3" variant="info" size="sm">
                                                 <MdEdit className="mb-1 mx-1" />
                                                 <span>Edit</span>
                                             </Button>
                                         </Link>
+                                        <Button className="m-1 px-3" variant="danger" size="sm" onClick={() => handleOpenConfirmationModal(bidding._id)}>
+                                            <AiTwotoneDelete className="mb-1 mx-1" />
+                                            <span>Delete</span>
+                                        </Button>
+                                
                                     </td>
                                 </tr>
                             ))
