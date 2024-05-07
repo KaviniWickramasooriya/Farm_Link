@@ -21,10 +21,10 @@ router.put("/update/:id", updatePost);
 
 
 // DELETE delete bidding by ID
-router.delete("/delete/:id", async (req, res) => {
-    const id = req.params.id;
+router.delete("/delete/:_id", async (req, res) => {
+    const _id = req.params._id;
     try {
-        const deletedBidding = await BuyerReq.findByIdAndDelete(id);
+        const deletedBidding = await BuyerReq.findByIdAndDelete(_id);
         if (!deletedBidding) {
             return res.status(404).json({ error: "Bidding not found" });
         }
