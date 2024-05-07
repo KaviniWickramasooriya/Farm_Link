@@ -102,16 +102,6 @@ const getBiddingsById = asyncHandler(async (req, res) => {
     
 });
 
-// Delete post by ID
-const deletePost = asyncHandler(async (req, res) => {
-    const postId = req.params.id;
-    const deletedPost = await buyerReqService.deletePost(postId);
-    if (!deletedPost) {
-        return res.status(404).json({ message: "Post not found" });
-    }
-    res.status(200).json({ message: "Post deleted successfully" });
-});
-
 // Update post by ID
 const updatePost = asyncHandler(async (req, res) => {
     const postId = req.params.id;
@@ -129,6 +119,5 @@ module.exports  = {
     getPostDetails,
     getBiddingDetailsByCategory,
     getBiddingsById,
-    deletePost,
     updatePost
 };

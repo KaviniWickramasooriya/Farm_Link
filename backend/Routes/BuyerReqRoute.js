@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { upload } = require("../Utills/fileupload");
+const BuyerReq = require("../Models/BuyerReqModel");
 
 const {
     addPost,
@@ -8,7 +9,6 @@ const {
     getPostDetails,
     getBiddingDetailsByCategory,
     getBiddingsById,
-    deletePost,
     updatePost
 } = require("../Controllers/BuyerReqController");
 
@@ -17,7 +17,22 @@ router.post("/createPost", upload.single("image"), addPost);
 router.get("/getPost/:id", getPostDetails);
 router.get("/category/:category", getBiddingDetailsByCategory);
 router.get('/user-biddings/:id', getBiddingsById);
-router.delete("/delete/:id", deletePost);
 router.put("/update/:id", updatePost);
+
+
+// DELETE delete bidding by ID
+router.delete("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    try {
+        const deletedBidding = await BuyerReq.findByIdAndDelete(id);
+        if (!deletedBidding) {
+            return res.status(404).json({ error: "Bidding not found" });
+        }
+        res.json({ status: "Bidding deleted" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error deleting bidding" });
+    }
+});
 
 module.exports = router;
