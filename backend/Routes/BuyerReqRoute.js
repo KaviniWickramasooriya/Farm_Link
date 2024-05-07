@@ -43,16 +43,16 @@ router.delete("/delete/:_id", async (req, res) => {
 
 // Update bidding by ID 
 router.put('/update/:_id', async (req, res) => {
-    const updates = Object.keys(req.body);
-    const allowedUpdates = ['title', 'location', 'category', 'image', 'startingPrice', 'description', 'workUpdate'];
-    const isValidOperation = updates.every(update => allowedUpdates.includes(update));
+    // const updates = Object.keys(req.body);
+    // const allowedUpdates = ['title', 'location', 'category', 'image', 'startingPrice', 'description'];
+    // const isValidOperation = updates.every(update => allowedUpdates.includes(update));
   
-    if (!isValidOperation) {
-      return res.status(400).send({ error: 'Invalid updates!' });
-    }
+    // if (!isValidOperation) {
+    //   return res.status(400).send({ error: 'Invalid updates!' });
+    // }
   
     try {
-      const buyerReq = await BuyerReq.findByIdAndUpdate(req.params._id, req.body, { new: true, runValidators: true });
+    const buyerReq = await BuyerReq.findByIdAndUpdate(req.params._id, req.body, { new: true/*, runValidators: true*/ });
   
       if (!buyerReq) {
         return res.status(404).send();
