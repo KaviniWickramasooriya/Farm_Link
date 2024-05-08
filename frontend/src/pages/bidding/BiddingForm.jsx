@@ -18,6 +18,7 @@ const BiddingForm = () => {
   const [startingPrice, setStartingPrice] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [errors, setErrors] = useState({}); // State to manage form validation errors
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,9 +41,41 @@ const BiddingForm = () => {
     }
   };
 
+  //form validations
+  const validateForm = () => {
+    const errors = {};
+    if (!title.trim()) {
+      errors.title = "Title is required";
+    }
+    if (!description.trim()) {
+      errors.description = "Description is required";
+    }
+    if (!location.trim()) {
+      errors.location = "Location is required";
+    }
+    if (!category) {
+      errors.category = "Category is required";
+    }
+    if (!startingPrice.trim()) {
+      errors.startingPrice = "Starting Price is required";
+    } else if (isNaN(startingPrice)) {
+      errors.startingPrice = "Starting Price must be a number";
+    }
+    if (!image) {
+      errors.image = "Image is required";
+    }
+    return errors;
+  };
+
   const saveBidding = async (e) => {
     e.preventDefault();
-  
+
+    const errors = validateForm(); // Validate form fields
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors); // Set validation errors in state
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append("description", description.replace(/<p>/g, '').replace(/<\/p>/g, ''));
@@ -51,13 +84,13 @@ const BiddingForm = () => {
       formData.append("title", title);
       formData.append("startingPrice", startingPrice);
       formData.append("image", image);
-  
+
       const res = await axios.post("http://localhost:5000/api/buyer/createPost", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-  
+
       console.log(res.data); // Assuming the backend returns the saved bidding data
       toast.success('Bidding added successfully!');
       // Clear form fields after successful submission
@@ -74,14 +107,12 @@ const BiddingForm = () => {
       // Optionally, display an error message to the user
     }
   };
-  
-
 
   return (
     <div className="add-bidding">
-        <GlobalStyles/>      
+      <GlobalStyles/>      
       <Card cardClass={"card"}>
-      <h2 style={{alignSelf:'center'}}>Add A Bidding</h2>
+        <h2 style={{alignSelf:'center'}}>Add A Bidding</h2>
         <form onSubmit={saveBidding}>
           <label>Title:</label>
           <input
@@ -91,6 +122,7 @@ const BiddingForm = () => {
             value={title}
             onChange={handleInputChange}
           />
+          {errors.title && <span className="error">{errors.title}</span>}
 
           <label>Description:</label>
           <ReactQuill
@@ -100,6 +132,7 @@ const BiddingForm = () => {
             modules={BiddingForm.modules}
             formats={BiddingForm.formats}
           />
+          {errors.description && <span className="error">{errors.description}</span>}
 
           <label>Location:</label>
           <input
@@ -109,6 +142,7 @@ const BiddingForm = () => {
             value={location}
             onChange={handleInputChange}
           />
+          {errors.location && <span className="error">{errors.location}</span>}
 
           <label>Category:</label>
           <select
@@ -121,6 +155,7 @@ const BiddingForm = () => {
             <option value="Fruit">Fruit</option>
             <option value="Grain">Grain</option>
           </select>
+          {errors.category && <span className="error">{errors.category}</span>}
 
           <Card cardClass={"group"}>
             <label>Image:</label>
@@ -129,6 +164,7 @@ const BiddingForm = () => {
               name="image"
               onChange={(e) => handleImageChange(e)}
             />
+            {errors.image && <span className="error">{errors.image}</span>}
             {imagePreview && (
               <div className="image-preview">
                 <img src={imagePreview} alt="bidding" />
@@ -144,6 +180,7 @@ const BiddingForm = () => {
             value={startingPrice}
             onChange={handleInputChange}
           />
+          {errors.startingPrice && <span className="error">{errors.startingPrice}</span>}
 
           <div className="--my">
             <button type="submit" className="--btn --btn-primary">

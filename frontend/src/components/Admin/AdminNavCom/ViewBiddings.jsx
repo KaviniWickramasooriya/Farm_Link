@@ -6,11 +6,8 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { generatePDF } from './GeneratePDF';
 
 
-
 const ViewBiddings = () => {
     const [data, setData] = useState([]);
-
-    
 
     useEffect(() => {
       const fetchData = async () => {
@@ -43,28 +40,18 @@ const ViewBiddings = () => {
       };
   
     return (
-
         <div className="p-5 ">
-            
-            
-        <div style={{ color: 'black' }}>
-            
-    
-          
-        <h1 style={{ textAlign: 'center' }}>Bidding List</h1>
+                      
+        <div style={{ color: 'black' }}>                    
+          <h1 style={{ textAlign: 'center', fontSize:'30px'}}>Bidding List</h1>
   
-        <div className="btnn" style={{marginLeft:'200px'}}>
-        
-        {/* <Button variant="primary" className="m-1" style={{display:'flex', gap:'20px'}}>
-              <IoMdAddCircleOutline className="mb-1" style={{}}/> <span>Download Report</span>
-          </Button> */}
-          <Button variant="primary" className="m-1" style={{ display: 'flex', gap: '20px' }} onClick={handleDownloadReport}>
-          <IoMdAddCircleOutline className="mb-1" /> <span>Download Report</span>
-          
-        </Button>
-          
+        <div className="btnn" style={{marginLeft:'100px'}}>
+          <Button variant="primary" className="m-1" style={{ display: 'flex', gap: '20px'}} onClick={handleDownloadReport}>
+            <IoMdAddCircleOutline className="mb-1" /> <span>Download Report</span>          
+          </Button>        
         </div>
-        <div className="mt-5" style={{ zIndex: '5', width: '80%', marginTop: '100px', marginLeft: '150px' }}>
+
+        <div className="mt-5" style={{ zIndex: '5', marginLeft: '50px' }}>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -73,8 +60,7 @@ const ViewBiddings = () => {
                 <th>Category</th>
                 <th>Location</th>
                 <th>Title</th>
-                <th>Starting Price</th>
-                
+                <th>Starting Price</th>               
               </tr>
             </thead>
             <tbody>
@@ -90,7 +76,7 @@ const ViewBiddings = () => {
                     <td>{bidding.category}</td>
                     <td>{bidding.location}</td>
                     <td>{bidding.title}</td>
-                    <td>{bidding.startingPrice}</td>
+                    <td>Rs. {bidding.startingPrice}</td>
                     
                   </tr>
                 ))

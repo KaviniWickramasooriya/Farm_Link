@@ -20,8 +20,6 @@ const getAllPosts = asyncHandler(async (req, res) => {
 });
 
 
-
-
 //create Post
 
 const addPost = asyncHandler(async (req, res) => {
@@ -87,6 +85,7 @@ const getBiddingDetailsByCategory = asyncHandler(async (req, res) => {
 
 });
 
+
 // Get products by user ID
 const getBiddingsById = asyncHandler(async (req, res) => {
     const biddings = await buyerReqService.getBiddingsByUser(req.params.id);
@@ -102,22 +101,11 @@ const getBiddingsById = asyncHandler(async (req, res) => {
     
 });
 
-// Update post by ID
-// const updatePost = asyncHandler(async (req, res) => {
-//     const postId = req.params.id;
-//     const { description, location, category, title, startingPrice } = req.body;
-//     const updatedPost = await buyerReqService.updatePost(postId, { description, location, category, title, startingPrice });
-//     if (!updatedPost) {
-//         return res.status(404).json({ message: "Post not found" });
-//     }
-//     res.status(200).json({ message: "Post updated successfully", post: updatedPost });
-// });
 
 module.exports  = {
     getAllPosts,
     addPost,
     getPostDetails,
     getBiddingDetailsByCategory,
-    getBiddingsById,
-    //updatePost
+    getBiddingsById
 };

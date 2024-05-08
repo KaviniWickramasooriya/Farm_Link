@@ -1,9 +1,9 @@
 const BuyerReq = require("../Models/BuyerReqModel");
 
+
 const getAllPosts = async () => {
     return await BuyerReq.find();
 };
-
 
 const addPost = async (description, location, category, fileData, demo, title, startingPrice) => {
     console.log(demo)
@@ -18,7 +18,6 @@ const addPost = async (description, location, category, fileData, demo, title, s
     });
 };
 
-
 const getPostDetailsById = async (id) => {
     return await BuyerReq.findById(id).select('description location category title user image.filePath startingPrice');
 };
@@ -31,17 +30,11 @@ const getBiddingsByUser = async (userId) => {
     return await BuyerReq.find({ user: userId });      
 };
 
-// // Update post by ID
-// const updatePost = async (postId, newData) => {
-//     return await Post.findByIdAndUpdate(postId, newData, { new: true });
-// };
-
 
 module.exports = {
     getAllPosts,
     addPost,
     getPostDetailsById,
     getBiddingsByCategory,
-    getBiddingsByUser,
-    //updatePost
+    getBiddingsByUser
 };

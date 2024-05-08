@@ -8,18 +8,19 @@ import toast from 'react-hot-toast';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import "./BiddingForm.scss";
 
+
 function UpdateBiddingForm() {
     const { id } = useParams(); // Access the bidding ID from URL parameter
     const navigate = useNavigate(); // Get the navigate function
     const [bidding, setBidding] = useState({
-        _id: "", // Add _id field to the initial state
+        _id: "",
         title: "",
         location: "",
         category: "",
-        image: "",
         startingPrice: "",
         description: "",
     });
+    const [errors, setErrors] = useState({}); // State to manage form validation errors
 
     useEffect(() => {
         if (id) {
@@ -30,14 +31,13 @@ function UpdateBiddingForm() {
     const fetchBidding = async (id) => {
         try {
             const response = await axios.get(`http://localhost:5000/api/buyer/getPost/${id}`);
-            const { _id, title, location, category, image, startingPrice, description } = response.data.bidding;
+            const { _id, title, location, category, startingPrice, description } = response.data.bidding;
             setBidding({
                 _id,
                 title,
                 location,
                 category,
-                //image: image.filePath, // Assuming filePath is the URL of the image
-                startingPrice,
+                startingPrice: String(startingPrice), // Convert startingPrice to string
                 description,
             });
         } catch (error) {
@@ -45,38 +45,53 @@ function UpdateBiddingForm() {
         }
     };
 
-    /*const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setBidding(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };*/
     const handleInputChange = (e) => {
-      // Check if e exists and e.target is defined
-      if (e && e.target) {
-          const { name, value } = e.target;
-          setBidding(prevState => ({
-              ...prevState,
-              [name]: value
-          }));
-      }
-  };
-  
+        if (e && e.target) {
+            const { name, value } = e.target;
+            setBidding(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
+    };
+
+    //form validations
+    const validateForm = () => {
+        const errors = {};
+        if (!bidding.title.trim()) {
+            errors.title = "Title is required";
+        }
+        if (!bidding.description.trim()) {
+            errors.description = "Description is required";
+        }
+        if (!bidding.location.trim()) {
+            errors.location = "Location is required";
+        }
+        if (!bidding.category) {
+            errors.category = "Category is required";
+        }
+        if (!bidding.startingPrice.trim()) {
+            errors.startingPrice = "Starting Price is required";
+        } else if (isNaN(Number(bidding.startingPrice))) {
+            errors.startingPrice = "Starting Price must be a number";
+        }
+        return errors;
+    };
 
     const handleUpdateSubmit = (e) => {
         e.preventDefault();
+        const errors = validateForm(); // Validate form fields
+        if (Object.keys(errors).length > 0) {
+            setErrors(errors); // Set validation errors in state
+            return;
+        }
         if (!bidding._id) {
             console.error("Bidding ID is undefined.");
-            console.log(`Bidding id ${bidding._id}`)
             return; // Skip the update if _id is undefined
         }
-        console.log("Bidding data:", bidding); // Log the bidding object
-        axios.put(`http://localhost:5000/api/buyer/update/${bidding._id}`,bidding)
+        axios.put(`http://localhost:5000/api/buyer/update/${bidding._id}`, bidding)
             .then((res) => {
                 toast.success("Bidding updated successfully");
-                console.log("Updated");
-                // Navigate to addBidding page after successful update
                 navigate('/addBidding');
             })
             .catch((err) => {
@@ -84,7 +99,6 @@ function UpdateBiddingForm() {
                 toast.error("Error occurred while updating Bidding. Please try again later.");
             });
     };
-  
 
     return (
         <div className="add-bidding">
@@ -100,16 +114,17 @@ function UpdateBiddingForm() {
                         value={bidding.title}
                         onChange={handleInputChange}
                     />
+                    {errors.title && <span className="error">{errors.title}</span>}
 
                     <label>Description:</label>
                     <ReactQuill
                         theme="snow"
                         value={bidding.description}
-                        //onChange={(value) => setBidding(prevState => ({ ...prevState, description: value }))}
                         onChange={handleInputChange}
                         modules={UpdateBiddingForm.modules}
                         formats={UpdateBiddingForm.formats}
                     />
+                    {errors.description && <span className="error">{errors.description}</span>}
 
                     <label>Location:</label>
                     <input
@@ -119,6 +134,7 @@ function UpdateBiddingForm() {
                         value={bidding.location}
                         onChange={handleInputChange}
                     />
+                    {errors.location && <span className="error">{errors.location}</span>}
 
                     <label>Category:</label>
                     <select
@@ -131,8 +147,7 @@ function UpdateBiddingForm() {
                         <option value="Fruit">Fruit</option>
                         <option value="Grain">Grain</option>
                     </select>
-
-                    
+                    {errors.category && <span className="error">{errors.category}</span>}
 
                     <label>Starting Price:</label>
                     <input
@@ -142,6 +157,7 @@ function UpdateBiddingForm() {
                         value={bidding.startingPrice}
                         onChange={handleInputChange}
                     />
+                    {errors.startingPrice && <span className="error">{errors.startingPrice}</span>}
 
                     <div className="--my">
                         <button type="submit" className="--btn --btn-primary">

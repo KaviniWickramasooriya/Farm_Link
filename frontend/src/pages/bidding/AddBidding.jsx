@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { MdEdit } from 'react-icons/md';
 import { BsCircle } from 'react-icons/bs';
@@ -102,7 +102,7 @@ const AddBidding = () => {
                                     <td>{bidding.description}</td>
                                     <td>{bidding.category}</td>
                                     <td>{bidding.location}</td>                                  
-                                    <td>{bidding.startingPrice}</td>
+                                    <td>Rs. {bidding.startingPrice}</td>
                                     <td style={{display:'flex'}}>
 
                                         <Link to={`/updateBiddingForm/${bidding._id}`}>
